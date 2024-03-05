@@ -7,9 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.Test;
 
 import java.time.Duration;
-
+@Test
 public class TC_0701 extends BaseDriver {
     //1. Kullanıcı Akakce.com sitesini tarayıcıda açar.
     //2. Kullanıcı ana sayfada "Giriş Yap" veya benzer bir seçeneği bulur
