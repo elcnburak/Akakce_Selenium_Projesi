@@ -32,8 +32,8 @@ import java.time.Duration;
         //5. Kullanıcı hesabına başarılı bir şekilde giriş yapar.
         //6. Kullanıcı, hesap ayarları veya profil bölümünden "Hesabımı Sil"
         //veya benzer bir seçeneğe tıklar.
-        //7. Hesap silme işlemi başarılı bir şekilde tamamlandığında, uygun
-        //bir mesajın görüntülendiğini kontrol eder.
+        //7. Hesap silme işlemi sırasında, geçersiz bir şifre girer ve işlemi
+        //tamamlamaya çalışır.
 
 
         //1. Kullanıcı Akakce.com sitesini tarayıcıda açar.
@@ -78,10 +78,17 @@ import java.time.Duration;
             WebElement silTikla= driver.findElement(By.xpath("//*[text()='Hesabımı Sil']"));
             silTikla.click();
 
-    //7. Hesap silme işlemi başarılı bir şekilde tamamlandığında, uygun
-    //bir mesajın görüntülendiğini kontrol eder.
-            WebElement msg=driver.findElement(By.xpath("//*[@id=\"C4w\"]/div/p"));
-            Assert.assertTrue("Aranılan mesaj bulunamadı!", msg.getText().contains("Listelenecek mesaj bulunamadı."));
+    //7. Hesap silme işlemi sırasında, geçersiz bir şifre girer ve işlemi
+            //tamamlamaya çalışır.
+            wait.until(ExpectedConditions.urlToBe("https://www.akakce.com/akakcem/kullanici-bilgilerim/uyelik-iptali/"));
+            WebElement passDoldur= driver.findElement(By.xpath("//*[@id=\"p\"]"));
+            passDoldur.sendKeys("2524524");
+//alert açıldı
+            driver.switchTo().alert().accept(); // tamam a bas
+
+
+            WebElement msg=driver.findElement(By.xpath("//*[@id=\"info\"]"));
+            Assert.assertTrue("Şifre yanlış mesajı bulunamadı!", msg.getText().contains("Şifreyi kontrol ediniz."));
 
             BekleKapat();
 
