@@ -68,8 +68,19 @@ public class TC_0701 extends BaseDriver {
 
         //7. Hesap silme işlemi başarılı bir şekilde tamamlandığında, uygun
         //bir mesajın görüntülendiğini kontrol eder.
-        WebElement msg=driver.findElement(By.xpath("//*[@id=\"C4w\"]/div/p"));
-        Assert.assertTrue("Aranılan mesaj bulunamadı!", msg.getText().contains("Listelenecek mesaj bulunamadı."));
+        WebElement passDoldur= driver.findElement(By.xpath("//*[@id=\"p\"]"));
+        wait.until(ExpectedConditions.textToBe(By.xpath("//h1"), "Hesabımı Sil"));
+        passDoldur.sendKeys("2524524");
+        WebElement click2= driver.findElement(By.xpath("//*[@type=\"submit\"]"));
+        click2.click();
+        MyFunc.Bekle(4);
+
+//alert açıldı
+        wait.until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert().accept();
+
+        WebElement msg=driver.findElement(By.xpath("//*[@id=\"info\"]"));
+        Assert.assertTrue("Şifre yanlış mesajı bulunamadı!", msg.getText().contains("Şifreyi kontrol ediniz."));
 
         BekleKapat();
 

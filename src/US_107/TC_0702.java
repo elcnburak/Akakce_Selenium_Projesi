@@ -24,19 +24,7 @@ import java.time.Duration;
     //tamamlamaya çalışır.
 
     public class TC_0702 extends BaseDriver {
-        //1. Kullanıcı Akakce.com sitesini tarayıcıda açar.
-        //2. Kullanıcı ana sayfada "Giriş Yap" veya benzer bir seçeneği bulur
-        //ve tıklar.
-        //3. Kullanıcı, test data daki geçerli bilgileri girer:
-        //4. "Giriş Yap" butonuna tıklar.
-        //5. Kullanıcı hesabına başarılı bir şekilde giriş yapar.
-        //6. Kullanıcı, hesap ayarları veya profil bölümünden "Hesabımı Sil"
-        //veya benzer bir seçeneğe tıklar.
-        //7. Hesap silme işlemi sırasında, geçersiz bir şifre girer ve işlemi
-        //tamamlamaya çalışır.
 
-
-        //1. Kullanıcı Akakce.com sitesini tarayıcıda açar.
         @Test
         public void TC_0702_1() {
 
@@ -61,31 +49,34 @@ import java.time.Duration;
             girisYap2.click();
 
             //5. Kullanıcı hesabına başarılı bir şekilde giriş yapar.
-            wait.until(ExpectedConditions.urlToBe("https://www.akakce.com/"));
-
             //6. Kullanıcı, hesap ayarları veya profil bölümünden "Hesabımı Sil"
             //veya benzer bir seçeneğe tıklar.
+            MyFunc.Bekle(2);
 
-            Actions driverAksiyon=new Actions(driver);
             WebElement icon=driver.findElement(By.xpath("//*[@id=\"H_a_v8\"]"));
             WebElement Hesabim=driver.findElement(By.xpath("//*[@id=\"HM_v8\"]/ul/li[5]/a"));
-
+            Actions driverAksiyon=new Actions(driver);
             driverAksiyon.moveToElement(icon).build().perform();
             System.out.println("Aksiyon hazırlandı");
+            wait.until(ExpectedConditions.textToBe(By.xpath("//h2[@class='hpl_head']"), "Son Yakalanan İndirimler"));
             driverAksiyon.click(Hesabim).build().perform();
 
-            wait.until(ExpectedConditions.urlToBe("https://www.akakce.com/akakcem/"));
             WebElement silTikla= driver.findElement(By.xpath("//*[text()='Hesabımı Sil']"));
+            wait.until(ExpectedConditions.urlToBe("https://www.akakce.com/akakcem/"));
             silTikla.click();
 
     //7. Hesap silme işlemi sırasında, geçersiz bir şifre girer ve işlemi
             //tamamlamaya çalışır.
-            wait.until(ExpectedConditions.urlToBe("https://www.akakce.com/akakcem/kullanici-bilgilerim/uyelik-iptali/"));
             WebElement passDoldur= driver.findElement(By.xpath("//*[@id=\"p\"]"));
+            wait.until(ExpectedConditions.textToBe(By.xpath("//h1"), "Hesabımı Sil"));
             passDoldur.sendKeys("2524524");
-//alert açıldı
-            driver.switchTo().alert().accept(); // tamam a bas
+            WebElement click2= driver.findElement(By.xpath("//*[@type=\"submit\"]"));
+            click2.click();
+            MyFunc.Bekle(4);
 
+//alert açıldı
+            wait.until(ExpectedConditions.alertIsPresent());
+            driver.switchTo().alert().accept();
 
             WebElement msg=driver.findElement(By.xpath("//*[@id=\"info\"]"));
             Assert.assertTrue("Şifre yanlış mesajı bulunamadı!", msg.getText().contains("Şifreyi kontrol ediniz."));
