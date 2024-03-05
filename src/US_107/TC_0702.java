@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 
-public class TC_0702 {
 
     //1. Kullanıcı Akakce.com sitesini tarayıcıda açar.
     //2. Kullanıcı ana sayfada "Giriş Yap" veya benzer bir seçeneği bulur
@@ -38,7 +37,7 @@ public class TC_0702 {
 
 
         //1. Kullanıcı Akakce.com sitesini tarayıcıda açar.
-@Test
+        @Test
         public void TC_0702_1() {
 
             driver.get("https://www.akakce.com/");
